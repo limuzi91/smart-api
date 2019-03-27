@@ -11,11 +11,15 @@ const entries = require("../controllers/entries");
 
 const db = knex({
   client: "pg",
+  // connection: {
+  //   host: "postgresql-pointy-62824",
+  //   user: "muzili",
+  //   password: "",
+  //   database: "smart-brain"
+  // }
   connection: {
-    host: "127.0.0.1",
-    user: "muzili",
-    password: "",
-    database: "smart-brain"
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
   }
 });
 
