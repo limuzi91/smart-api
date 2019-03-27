@@ -7,7 +7,7 @@ const handleRegister = (req, res, db, bcrypt) => {
   const hash = bcrypt.hashSync(password);
 
   db.transaction(trx => {
-    trx
+    return trx
       .insert({
         hash,
         email
@@ -29,6 +29,8 @@ const handleRegister = (req, res, db, bcrypt) => {
             res.status(400).json(err);
           });
       })
+
+      .catch(err => res.status(400).json(err)) //fix bug: Unhandled rejection error: duplicate key value violates unique constraint "login_email_key"
       .then(trx.commit)
       .catch(trx.rollback);
   });
